@@ -1,3 +1,32 @@
+name: CI - Build e Push Docker
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Login no GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      - name: Build da imagem Docker
+        run: |
+          docker build -t ghcr.io/mjrsbr/streamlit-ci-cd-lab:latest .
+
+      - name: Push da imagem para o GHCR
+        run: |
+          docker push ghcr.io/mjrsbr/streamlit-ci-cd-lab:latest
 name: CI - Build Docker
 
 on:
