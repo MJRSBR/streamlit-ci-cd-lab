@@ -1,4 +1,4 @@
-name: CI Inicial
+name: CI - Build Docker
 
 on:
   push:
@@ -6,16 +6,17 @@ on:
       - main
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Mostrar estrutura do repositório
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build da imagem Docker
         run: |
-          echo "Diretório atual:"
-          pwd
-          echo "Conteúdo:"
-          ls -la
+          docker build -t streamlit-ci-test .
+
