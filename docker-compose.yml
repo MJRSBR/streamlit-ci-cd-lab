@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: streamlit-ci-cd-lab:local
+    container_name: streamlit-ci-cd-lab-test
+    ports:
+      - "8501:8501"
