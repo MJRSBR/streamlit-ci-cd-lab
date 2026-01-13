@@ -20,10 +20,19 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
 
+      - name: Definir versão da imagem
+        run: |
+          echo "IMAGE_VERSION=v$(date +'%Y%m%d-%H%M')" >> $GITHUB_ENV
+
       - name: Build da imagem Docker
         run: |
-          docker build -t ghcr.io/mjrsbr/streamlit-ci-cd-lab:latest .
+          docker build \
+            -t ghcr.io/mjrsbr/streamlit-ci-cd-lab:${{ env.IMAGE_VERSION }} \
+            -t ghcr.io/mjrsbr/streamlit-ci-cd-lab:latest \
+            .
 
       - name: Push da imagem para o GHCR
         run: |
+          docker push ghcr.io/mjrsbr/streamlit-ci-cd-lab:${{ env.IMAGE_VERSION }}
           docker push ghcr.io/mjrsbr/streamlit-ci-cd-lab:latest
+
