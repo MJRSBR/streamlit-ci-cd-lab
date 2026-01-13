@@ -18,7 +18,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Definir versão da imagem
         run: |
@@ -36,3 +36,7 @@ jobs:
           docker push ghcr.io/mjrsbr/streamlit-ci-cd-lab:${{ env.IMAGE_VERSION }}
           docker push ghcr.io/mjrsbr/streamlit-ci-cd-lab:latest
 
+
+permissions:
+  contents: read
+  packages: write
