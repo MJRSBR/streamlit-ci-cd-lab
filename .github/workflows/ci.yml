@@ -8,6 +8,9 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout do código
@@ -35,8 +38,3 @@ jobs:
         run: |
           docker push ghcr.io/mjrsbr/streamlit-ci-cd-lab:${{ env.IMAGE_VERSION }}
           docker push ghcr.io/mjrsbr/streamlit-ci-cd-lab:latest
-
-
-permissions:
-  contents: read
-  packages: write
